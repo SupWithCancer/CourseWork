@@ -1,0 +1,14 @@
+C:\CourseWork\DataAccessLibrary\bin\Debug\net6.0\DataAccessLayer.deps.json
+C:\CourseWork\DataAccessLibrary\bin\Debug\net6.0\DataAccessLayer.runtimeconfig.json
+C:\CourseWork\DataAccessLibrary\bin\Debug\net6.0\DataAccessLayer.dll
+C:\CourseWork\DataAccessLibrary\bin\Debug\net6.0\ref\DataAccessLayer.dll
+C:\CourseWork\DataAccessLibrary\bin\Debug\net6.0\DataAccessLayer.pdb
+C:\CourseWork\DataAccessLibrary\obj\Debug\net6.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\CourseWork\DataAccessLibrary\obj\Debug\net6.0\DataAccessLayer.AssemblyInfoInputs.cache
+C:\CourseWork\DataAccessLibrary\obj\Debug\net6.0\DataAccessLayer.AssemblyInfo.cs
+C:\CourseWork\DataAccessLibrary\obj\Debug\net6.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\CourseWork\DataAccessLibrary\obj\Debug\net6.0\DataAccessLayer.dll
+C:\CourseWork\DataAccessLibrary\obj\Debug\net6.0\ref\DataAccessLayer.dll
+C:\CourseWork\DataAccessLibrary\obj\Debug\net6.0\DataAccessLayer.pdb
+C:\CourseWork\DataAccessLibrary\obj\Debug\net6.0\DataAccessLayer.genruntimeconfig.cache
+C:\CourseWork\DataAccessLibrary\obj\Debug\net6.0\DataAccessLayer.csproj.AssemblyReference.cache
