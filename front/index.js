@@ -1,14 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Header from "./Header.js";
-import SearchBar from "./Searchbar.js"
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "./index.css";
 
-ReactDOM.render(
-
-	<>
-		<Header />
-	  <SearchBar placeholder="Ведіть назву фільму або ім'я людини" />
-	</>,
-	document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));

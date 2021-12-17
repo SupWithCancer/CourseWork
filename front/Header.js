@@ -1,22 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 import "./index.css";
 
 const Header = () => {
 	return (
 		<header id="header" className="container">
-			<a className="logo-container">
+			<Link to="/" className="logo-container">
 				<div className="img logo"></div>
 				<div className="logo-text">
 			<span>FilmLibrary</span>
 				</div>
-			</a>
+				</Link>
 			<nav>
-				<a href="">Фільми</a>
-				<a href="">Люди</a>
-				<a className="login-button" href="">
+			<Link to="/films">Фільми</Link>
+			<Link to="/persons">Люди</Link>
+			<Link to="/login" className="login-button" href="">
 					Вхід
-				</a>
+					</Link>
 			</nav>
 		</header>
 	);

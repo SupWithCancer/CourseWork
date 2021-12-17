@@ -1,0 +1,133 @@
+.filmPoster{
+
+    display:inline-block;
+	align-items: flex-end;
+	flex-wrap: nowrap;
+	padding: 0 60px;
+	margin-top: 30px;
+    margin-left: 50px;
+    width: fit-content;
+    float: left;
+}
+
+.image{
+    
+	border-radius: 30px;
+    width: 400px;
+	height: 500px;
+    margin-bottom: 10px;
+    display: block;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+    
+}
+
+.film-info{
+    align-content: space-around;
+}
+.title{
+    text-align: center;
+	color: rgb(0, 0, 0);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+.year{
+    text-align: center;
+}
+
+.genres{
+    
+	color: rgb(0, 0, 0);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.stars {
+	--percent: calc(var(--rating) / 5 * 100%);
+	--star-background: #c4c4c4;
+	--star-color: #0140c9;
+	font-size: 32px;
+	font-family: Times;
+	line-height: 1;
+}
+
+.stars::before {
+	content: "★★★★★";
+	letter-spacing: 3px;
+	background: linear-gradient(90deg, var(--star-color) var(--percent), var(--star-background) var(--percent));
+	background-clip: text;
+	color: transparent;
+}
+
+
+.info-container {
+	
+    display:inline-block;
+	width: 400px;
+	height:  fit-content;
+	align-items: center;
+    vertical-align:middle
+    
+    
+}
+
+.rating-container {
+	position: absolute;
+    top: 400px;
+	transition: all 0.3s;
+}
+
+.comment-input{
+    position: relative;
+    margin-top: 150px;
+    margin-left: 100px;
+    text-align: center;
+   
+}
+
+.comment-input input{
+    box-sizing: border-box;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 50%;
+  height: 200px;
+  border: 1px solid #000000;
+}
+
+
+.comment-box {
+    position: relative;
+    margin-top: 10px;
+    margin-left:455px;
+   
+  box-sizing: border-box;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 50%;
+  height: 200px;
+  border: 1px solid #000000;
+    
+    
+}
+
+.username{
+    position: relative;
+    margin-top: 10px;
+    margin-left:455px;
+   
+}
+
+.filmogrphycontainer {
+	padding: 10px;
+	margin: 5px;
+	font-size: 16px;
+	justify-content: start;
+    margin-left: 100px;
+}
+
+.filmogrphycontainer:hover {
+	background-color: #f1eff9;
+	border-radius: 10px;
+}
