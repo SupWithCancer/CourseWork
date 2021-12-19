@@ -8,7 +8,6 @@ namespace DataAccessLayer
 
         IRepository<int, Film> Film { get; }
 
-        IRepository<int, UserRole> UserRole { get; }
 
         IRepository<int, Mark> Mark { get; }
 

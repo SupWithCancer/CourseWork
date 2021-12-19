@@ -7,13 +7,16 @@ namespace DataAccessLayer;
 
 public class FilmLibraryContext : DbContext
 {
-    public FilmLibraryContext() : base() { }
+    public FilmLibraryContext() : base() {
+        //Database.EnsureDeleted();
+        //Database.EnsureCreated();
+    }
 
     public FilmLibraryContext(DbContextOptions options) : base(options)
     {
-        // For re-create DB (Just run execute, turn off app and comment again)
-        Database.EnsureDeleted();
-        Database.EnsureCreated();
+
+
+        //Database.EnsureCreated();
     }
 
     public virtual DbSet<Genre> Genre { get; set; }
@@ -31,15 +34,14 @@ public class FilmLibraryContext : DbContext
     public virtual DbSet<Film> Film { get; set; }
 
 
-    public virtual DbSet<UserRole> UserRole { get; set; }
-
     public virtual DbSet<Role> Role { get; set; }
 
     public virtual DbSet<FilmPerson> FilmPerson { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server = DESKTOP-QSRO2ID; Database = FilmLibraryDB; Trusted_Connection = True;");
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=FilmLibrarydb;Username=postgres;Password=123");
+        base.OnConfiguring(optionsBuilder);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -204,27 +206,6 @@ public class FilmLibraryContext : DbContext
 
         });
 
-        modelBuilder.Entity<UserRole>(entity =>
-        {
-            entity.ToTable("user_role");
-
-            entity.Property(e => e.Id)
-                  .HasColumnName("userRole_id");
-
-            entity.Property(e => e.RoleName)
-                .HasColumnName("role_name")
-                .HasMaxLength(50)
-                .IsUnicode(true)
-                .IsRequired();
-            entity.HasIndex(e => e.RoleName)
-                  .IsUnique();
-
-
-            
-
-            entity.HasMany(ur => ur.Users)
-                  .WithOne(u => u.UserRoles);
-        });
 
         modelBuilder.Entity<User>(entity =>
         {
@@ -233,26 +214,29 @@ public class FilmLibraryContext : DbContext
             entity.Property(e => e.Id)
                   .HasColumnName("user_id");
 
-            entity.Property(e => e.Name)
-                .HasColumnName("name")
-                .HasMaxLength(50)
-                .IsUnicode(true)
-                .IsRequired();
-            entity.HasIndex(e => e.Name)
-                  .IsUnique();
-
             entity.Property(e => e.Email)
                   .HasColumnName("email")
+                  .HasMaxLength(254)
+                  .IsUnicode(true)
+                  .IsRequired();
+            entity.HasIndex(e => e.Email)
+                  .IsUnique();
+
+            entity.Property(e => e.PasswordHash)
+                  .HasColumnName("password_hash");
+
+            entity.Property(e => e.PasswordSalt)
+                  .HasColumnName("password_salt");
+
+            entity.Property(e => e.Name)
+                  .HasColumnName("first_name")
+                  .HasMaxLength(50)
                   .IsUnicode(true)
                   .IsRequired();
 
-            entity.Property(e => e.Password)
-                  .HasColumnName("password")
-                  .IsUnicode(true)
-                  .IsRequired();
+            
 
-            entity.HasOne(u => u.UserRoles)
-                  .WithMany(ur => ur.Users);
+         
 
             entity.HasMany(u => u.Comments)
                   .WithOne(cm => cm.User);

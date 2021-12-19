@@ -17,7 +17,7 @@ namespace DataAccessLayer
         private IRepository<int, Person> personRepository;
         private IRepository<int, Role> roleRepository;
         private IRepository<int, Comment> commentsRepository;
-        private IRepository<int, UserRole> userRoleRepository;
+
 
         public IRepository<int, User> User
         {
@@ -29,16 +29,7 @@ namespace DataAccessLayer
             }
         }
 
-        public IRepository<int, UserRole> UserRole
-        {
-            get
-            {
-                if (userRoleRepository == null)
-                    userRoleRepository = new EFRepository<int, UserRole, FilmLibraryContext>(db);
-                return userRoleRepository;
-            }
-        }
-
+     
 
         public IRepository<int, GenreFilm> GenreFilm
         {
