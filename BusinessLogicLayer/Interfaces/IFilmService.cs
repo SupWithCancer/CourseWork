@@ -8,13 +8,10 @@ namespace BusinessLogicLayer.Interfaces
     {
         Task<FilmDTO> GetFilmAsync(int id);
 
-        Task<List<FilmDTO>> GetFilmAsync();
+        Task<List<FilmDTO>> GetFilmsAsync();
 
-        //Task<List<FilmDTO>> GetDishesByCuisineIdAsync(int cuisineId);
-
-        //Task<List<FilmDTO>> GetDishesByCategoryIdAsync(int categoryId);
-
-        Task<bool> AnyFilmAsync(Expression<Func<Film, bool>> expression);
+ 
+        Task<bool> AnyFilmsAsync(Expression<Func<Film, bool>> expression);
 
         Task PostFilmAsync(FilmDTO film);
 
