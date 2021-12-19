@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\CourseWork\\DataAccessLibrary\\DataAccessLayer.csproj": {}
+    "C:\\Users\\Legion\\source\\repos\\CourseWork\\DataAccessLayer\\DataAccessLayer.csproj": {}
   },
   "projects": {
-    "C:\\CourseWork\\DataAccessLibrary\\DataAccessLayer.csproj": {
+    "C:\\Users\\Legion\\source\\repos\\CourseWork\\DataAccessLayer\\DataAccessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CourseWork\\DataAccessLibrary\\DataAccessLayer.csproj",
+        "projectUniqueName": "C:\\Users\\Legion\\source\\repos\\CourseWork\\DataAccessLayer\\DataAccessLayer.csproj",
         "projectName": "DataAccessLayer",
-        "projectPath": "C:\\CourseWork\\DataAccessLibrary\\DataAccessLayer.csproj",
+        "projectPath": "C:\\Users\\Legion\\source\\repos\\CourseWork\\DataAccessLayer\\DataAccessLayer.csproj",
         "packagesPath": "C:\\Users\\Legion\\.nuget\\packages\\",
-        "outputPath": "C:\\CourseWork\\DataAccessLibrary\\obj\\",
+        "outputPath": "C:\\Users\\Legion\\source\\repos\\CourseWork\\DataAccessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[10.1.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.0, )"
@@ -58,9 +66,9 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[6.0.1, )"
             }
           },
           "imports": [
