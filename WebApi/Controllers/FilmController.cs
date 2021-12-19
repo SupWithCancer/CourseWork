@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace WebApi.Controllers
 
         // GET: api/filmes
         [HttpGet()]
-        public async Task<ActionResult<List<FilmDTO>>> GetFilms() => await _service.GetFilmAsync();
+        public async Task<ActionResult<List<FilmDTO>>> GetFilms() => await _service.GetFilmsAsync();
 
         // GET: api/filmes/5
         [HttpGet("{id:int}")]
@@ -52,7 +52,7 @@ namespace WebApi.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> PutFilmAsync(int id, FilmDTO film)
         {
-            if (await _service.AnyFilmAsync(c => c.Name == film.Name && c.Id != id))
+            if (await _service.AnyFilmsAsync(c => c.Name == film.Name && c.Id != id))
                 return BadRequest("Another film with that name already existing");
 
             if (id != film.Id)
@@ -66,7 +66,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<FilmDTO>> PostFilm(FilmDTO film)
         {
-            var allfilms = await _service.GetFilmAsync();
+            var allfilms = await _service.GetFilmsAsync();
             if (allfilms.Any(c => c.Name == film.Name))
                 return BadRequest("film with that name already existing");
             // Make same with categoryId and cuisineId
@@ -80,7 +80,7 @@ namespace WebApi.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteFilm(int id)
         {
-            if (!await _service.AnyFilmAsync(d => d.Id == id))
+            if (!await _service.AnyFilmsAsync(d => d.Id == id))
                 return NotFound();
 
             await _service.DeleteFilmAsync(id);
