@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { UrlContext } from "./App";
 import { Link } from "react-router-dom";
 import "./index.css";
 import Header from "./Header";
-
+import sendRequest from "./sendRequest";
 import "./FilmPage.css"
 
 const FilmPoster = (props) => {
-	let backgroundImage = { backgroundImage: "url(" + process.env.PUBLIC_URL + "/films/" + props.image + ")" };
+	let backgroundImage = { backgroundImage: "url(" + process.env.PUBLIC_URL + props.image + ")" };
      return(
     <div className="filmPoster">
         <div className="image"style={backgroundImage}> </div>
@@ -51,12 +53,21 @@ const CommentBox = (props) =>{
 	)
 }
 
-const PersonFilms = (props) => {
+const PersonFilms = ({personId, roleId}) => {
+	const [person, setPerson] = useState();
+	const [role, setRole] = useState();
+	const rootRequestUrl = useContext(UrlContext);
+	const personRequestUrl = rootRequestUrl + "person/" + personId;
+	const roleRequestUrl = rootRequestUrl + "roles/" + roleId;
+    
+	useEffect(() => sendRequest(null, personRequestUrl, "GET").then(setPerson).catch(console.log), []);
+	useEffect(() => sendRequest(null, roleRequestUrl, "GET").then(setRole).catch(console.log), []);
 	return(
-	<div className="filmography">
-	<Link to={"/persons/" + props.personId} className="person">{props.role}:{props.name}
+		(person && role) ?  
+	(<div className="filmography">
+	<Link to={"/persons/" + personId} className="person">{role.title}:{person.name}
 	</Link>
-	</div>)
+	</div>) : null  )
 }
 
 const SectionContainer = (props) => {
@@ -86,33 +97,44 @@ const PersonFilmsContainer = (props) => {
 };
 const FilmPage = () => {
 	// let { title } = useParams();
-
+	const { filmId } = useParams();
+	const [film, setFilm] = useState();
+	const [filmPerson, setFilmPerson] = useState();
+	const rootRequestUrl = useContext(UrlContext);
+	const filmRequestUrl = rootRequestUrl + "film/" + filmId;
+	const filmPersonRequestUrl = rootRequestUrl + "filmperson/film/" + filmId;
+    
+	useEffect(() => sendRequest(null, filmRequestUrl, "GET").then(setFilm).catch(console.log), []);
+	useEffect(() => sendRequest(null, filmPersonRequestUrl, "GET").then(setFilmPerson).catch(console.log), []);
 	return (
 		<>
 			<Header />
-			<FilmPoster
-		
-			image="avg.jpg"/>
+			{film ? (
+             
+			<><FilmPoster
+		    filmId = {film.filmId}
+			image={film.imagePath}/>
 			<FilmInfo 
-			 title="Avengers"
-			 genre="Приключения"
-			 desc="Асгардский бог хитрости и обмана Локи мечтает захватить Землю и таким способом отомстить своему брату Тору. Для этого он заключает сделку с повелителем мощной инопланетной расы Читаури. В обмен на несметную армию Локи обещает достать Тессеракт, четырехмерный куб, обладающий несметной силой.
-
-			 В данный момент он хранится на научной базе секретной организации Щ.И.Т., где астрофизик Эрик Селвиг и агент Мария Хилл изучают его удивительные свойства. Вскоре они сообщают руководителю организации Нику Фьюри, что куб нестабилен и может произойти колоссальный выброс энергии. Фьюри пытается принять меры, но не успевает: Тессеракт открывает портал, через который Локи попадает на землю."
-		     genreId="1"
-			 year="2022"
-			rating={4}/> 
+			title={film.name}
+			 genre={film.theme}
+			 desc= {film.description}
+			 year={film.year}
+			rating={film.rank}/> 
+			{filmPerson ? (
 			<PersonFilmsContainer heading = "Фільм створювали">
+	           {filmPerson.map(fp => 
 			<PersonFilms
-			personId="1"
-			role = "актор"
-			name = "Дженніфер Лоуренс"/>
+			personId={fp.personId}
+			roleId =  {fp.roleId} /> )}
 			</PersonFilmsContainer>
+			) : null}
 			<CommentInput/>
 			<CommentBox
 			username = "topgamer"
 			content="Фильм отстой"/>
 			
+		</>
+		) : null} 
 		</>
 	);
 };

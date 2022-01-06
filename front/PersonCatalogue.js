@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./index.css";
 import Header from "./Header";
 import "./PersonCatalogue.css";
+import sendRequest from "./sendRequest";
+import { UrlContext } from "./App";
 
 const SectionContainer = (props) => {
 	const [isCollapsed, setCollapse] = useState(false);
@@ -24,7 +26,7 @@ const SectionContainer = (props) => {
 
 
 const PersonCard = (props) => {
-	let backgroundImage = { backgroundImage: "url(" + process.env.PUBLIC_URL + "/persons/" + props.image + ")" };
+	let backgroundImage = { backgroundImage: "url(" + process.env.PUBLIC_URL  + props.image + ")" };
      return(
     <div className="person-container">
         <div className="image"style={backgroundImage}> </div>
@@ -65,38 +67,50 @@ const CheckboxItem = (props) => {
 };
 
 const PersonCatalogue = () => {
+	const [persons, setPerson] = useState();
+	const rootApiUrl = useContext(UrlContext);
+
+	const [isCollapsed, setCollapse] = useState(false);
+	const [isCollapsed2, setCollapse2] = useState(false);
+
+
+	const onClickHandle = function () {
+		setCollapse((isCollapsed) => !isCollapsed);
+	};
+	const onClick2Handle = function () {
+		setCollapse2((isCollapsed2) => !isCollapsed2);
+	};
+	const onNameSearchChangeHandle = (event) => 
+		sendRequest(null, rootApiUrl + "person/" + event.target.value, "GET").then(setPerson).catch(console.log)	
+	
+
+	
+
+	useEffect(() => sendRequest(null, rootApiUrl + "person", "GET").then(setPerson).catch(console.log), []);
 	return (
 		<>
 			<Header />
-            <SearchBar heading="Ім'я людини"/>
-            <CheckboxFilterSection heading="Профессія" count="37">
-						
-							<CheckboxItem content="Актор" count="0" />
-						
-					</CheckboxFilterSection>
+			<div className="search-container" style={{ maxHeight: isCollapsed ? "60px" : "600px" }}>
+				<button className="collapse-button container" onClick={onClickHandle}>
+					Пошук за ім ям...
+					<div className="img" style={{ transform: isCollapsed ? "rotate(180deg)" : "" }}></div>
+				</button>
+				<input onChange={onNameSearchChangeHandle} type="search" placeholder="Пошук..." />
+			</div>
 			<div className="page-content">
 				<div className="cards-container">
-					<PersonCard
-						name="Дженнифер Лоуренс"
-						image="jnl.jpg"
-						personId="1"
-						age="21"
-						
-                        
-					/>
-					{[...Array(30).keys()].map((n) => (
-					
+				{persons?.map((f) => (
 						<PersonCard
-						name="Дженнифер Лоуренс"
-						image="jnl.jpg"
-						personId="1"
-						age="21"
+					    key = {f.id}
+						personId = {f.id}
+						name={f.name}
+						image={f.imagePath}
+					
+						age={f.age}
 						
-                        
 					/>
-                        
-				
 					))}
+                        
 				</div>
 			</div>
 		</>

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { UrlContext } from "./App";
 import { Link } from "react-router-dom";
 import "./index.css";
 import Header from "./Header";
-
+import sendRequest from "./sendRequest";
 import "./PersonPage.css"
 
 
@@ -26,12 +28,20 @@ const PersonInfo = (props) => {
 	</div>)
 }
 
-const PersonFilms = (props) => {
+const PersonFilms = ({filmId}) => {
+
+		const [film, setFilm] = useState();
+	const rootRequestUrl = useContext(UrlContext);
+	const filmRequestUrl = rootRequestUrl + "film/" + filmId;
+
+    
+	useEffect(() => sendRequest(null, filmRequestUrl, "GET").then(setFilm).catch(console.log), []);
 	return(
-	<div className="filmography">
-	<Link to={"/films/" + props.filmId} className="film"> {props.title}
+		film ? 
+	(<div className="filmography">
+	<Link to={"/films/" + filmId} className="film">  ' ' {film.name}
 	</Link>
-	</div>)
+	</div>) : null ) 
 }
 
 const SectionContainer = (props) => {
@@ -61,22 +71,37 @@ const PersonFilmsContainer = (props) => {
 };
 const PersonPage = () => {
 	// let { personId } = useParams();
+	const { personId } = useParams();
+	const [person, setPerson] = useState();
+	const [filmPerson, setFilmPerson] = useState();
+	const rootRequestUrl = useContext(UrlContext);
+	const personRequestUrl = rootRequestUrl + "person/" + personId;
+	
+	const filmPersonRequestUrl = rootRequestUrl + "filmperson/person/" + personId;
+   
+
+	useEffect(() => sendRequest(null, personRequestUrl, "GET").then(setPerson).catch(console.log), []);
+	useEffect(() => sendRequest(null, filmPersonRequestUrl, "GET").then(setFilmPerson).catch(console.log), []);
 
 	return (
 		<>
 			<Header />
-			<PersonPoster
-			image = "jnl.jpg"/>
-            <PersonInfo
-			name = "Дженнифер Лоуренс"
-			age = "21"
-			desc = "Дже́ннифер Шре́йдер Ло́уренс — американская актриса кино и телевидения. Лауреат премии «Оскар», трёх премий «Золотой глобус», премии BAFTA, двух «Премий Гильдии киноактёров США» и премии «Сатурн»."
-			/>
-			<PersonFilmsContainer heading = "Фільмографія">
-			<PersonFilms
-			filmId="1"
-			title = "Мстители"/>
-			</PersonFilmsContainer>
+			{person ? (
+			<><PersonPoster
+			        personId = {person.id}
+					image={person.imagePath} /><PersonInfo
+						name={person.name}
+						age= {person.age}
+						desc={person.description} />
+						{filmPerson ? (
+						<PersonFilmsContainer heading="Фільмографія">
+						{filmPerson.map(fp => 
+						<PersonFilms
+							filmId={fp.filmId}
+							 /> )}
+					</PersonFilmsContainer>	) : null}</> 
+			) : null}
+			
 		</>
 	);
 };
