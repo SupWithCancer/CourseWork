@@ -39,7 +39,7 @@ const PersonFilms = ({filmId}) => {
 	return(
 		film ? 
 	(<div className="filmography">
-	<Link to={"/films/" + filmId} className="film">  ' ' {film.name}
+	<Link to={"/films/" + filmId} className="film">   "{film.name}"
 	</Link>
 	</div>) : null ) 
 }

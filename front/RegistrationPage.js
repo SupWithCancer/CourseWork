@@ -44,22 +44,21 @@ const RegistrationForm = () => {
 	const passwordRegExp = "^(?=.*[a-z])(?=.*[A-Z])(?!=.*s).*$",
 		passwordMinLength = 6,
 		passwordMaxLenght = 32,
-		passwordTitle = `Пожалуйста, введите хотя бы 1 символ верхнего регистра, 1 символ нижнего регистра и 1 цифру. 
-						   Пароль также должен содержать от ${passwordMinLength} до ${passwordMaxLenght} символов
-						   и не должен содержать пробелы`;
+		passwordTitle = `Будь ласка, введіть хоча б 1 символ верхнього і нижнього регістрів, та принаймні 1 цифру
+						   Пароль повинен містити від ${passwordMinLength} до ${passwordMaxLenght} символів`;
 	return (
 		<form className="form-container" onSubmit={onSubmitHandle}>
 			<div className="container">
-				<input value={fields.email} onChange={setValue} name="email" type="email" placeholder="Введите почту" required />
-				<input value={fields.password} onChange={setValue} name="password" type="password" placeholder="Введите пароль" pattern={passwordRegExp} title={passwordTitle} minlength={passwordMinLength} maxlength={passwordMaxLenght} />
+				<input value={fields.email} onChange={setValue} name="email" type="email" placeholder="Введіть пошту" required />
+				<input value={fields.password} onChange={setValue} name="password" type="password" placeholder="Введіть пароль" pattern={passwordRegExp} title={passwordTitle} minlength={passwordMinLength} maxlength={passwordMaxLenght} />
 			</div>
 			<div className="container">
-				<input value={fields.name} onChange={setValue} name="name" type="text" placeholder="Введите имя" minlength="2" maxlength="32" required />
+				<input value={fields.name} onChange={setValue} name="name" type="text" placeholder="Введіть ім'я користувача" minlength="2" maxlength="32" required />
 				
 			</div>
-			<button className="sign-up-button">Зарегистрироваться</button>
-			<Link to="/sign-in" className="link">
-				Уже имеете аккаунт?
+			<button className="sign-up-button">Реєстрація</button>
+			<Link to="/login" className="link">
+				Вже зарєєстровані?
 			</Link>
 		</form>
 	);

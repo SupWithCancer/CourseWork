@@ -12,20 +12,22 @@ import RegistrationPage from "./RegistrationPage";
 const apiUrl = "https://localhost:7017/api/";
 const UrlContext = createContext(apiUrl);
 const App = () => {
-	return (
-		<Router>
-			<Routes>
-				<Route path="/" element={<FilmsCatalogue />} />
-				<Route path="/films" element={<FilmsCatalogue />} />
-				<Route path="/films/:filmId" element={<FilmPage />} />
-				<Route path="/persons" element={<PersonCatalogue />} />
-				<Route path="/persons/:personId" element={<PersonPage />} />
-				<Route path="/login" element={<LoginPage />} />
-				<Route path="/sign-up" element={<RegistrationPage />} />
-				<Route path="*" element={<FilmsCatalogue />} />
-			</Routes>
-		</Router>
-	);
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<FilmsCatalogue />} />
+                <Route path="/films" element={<FilmsCatalogue />} />
+                <Route path="/films/:filmId" element={<FilmPage />} />
+                <Route path="/films/genre/:genreId" element={<FilmsCatalogue />} />
+                <Route path="/films/year/:year" element={<FilmsCatalogue />} />
+                <Route path="/persons" element={<PersonCatalogue />} />
+                <Route path="/persons/:personId" element={<PersonPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/sign-up" element={<RegistrationPage />} />
+                <Route path="*" element={<FilmsCatalogue />} />
+            </Routes>
+        </Router>
+    );
 };
 
 export default App;
