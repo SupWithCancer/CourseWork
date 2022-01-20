@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-
+using DataAccessLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace DataAccessLayer
 {
@@ -27,10 +28,11 @@ namespace DataAccessLayer
             await Task.FromResult(0);
         }
 
-        public virtual async Task<TEntity> DeleteAsync(TEntity entity)
+         public virtual Task<TEntity> DeleteAsync(TEntity entity)
         {
-            return Context.Set<TEntity>()
-                          .Remove(entity).Entity;
+
+            return Task.FromResult(Context.Set<TEntity>()
+                                          .Remove(entity).Entity);
         }
 
         public virtual async Task<List<TEntity>> GetAllAsync()
@@ -57,6 +59,7 @@ namespace DataAccessLayer
                                 .CountAsync(predicate);
         }
 
+        
         public virtual async Task<List<TEntity>> PagingFetchAsync(int startIndex, int count)
         {
             return await Context.Set<TEntity>()
@@ -83,19 +86,19 @@ namespace DataAccessLayer
                                 .AnyAsync(predicate);
         }
 
-        public Task SaveAsync() => Context.SaveChangesAsync();
+        public async Task SaveAsync() => await Context.SaveChangesAsync();
 
-        private bool disposed = false;
+        private bool _disposed;
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
-            {
-                if (disposing)
-                    Context.Dispose();
-
-                disposed = true;
-            }
+            if (_disposed) return;
+            if (disposing) Context.Dispose();
+            _disposed = true;
+        }
+        public virtual IQueryable<TEntity> GetQueryable()
+        {
+            return Context.Set<TEntity>().AsQueryable();
         }
 
         public void Dispose()

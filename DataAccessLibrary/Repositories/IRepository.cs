@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Interfaces
 {
-    public interface IRepository<TKey, TEntity> : IDisposable where TEntity : class
+    public interface IRepository<in TKey, TEntity> : IDisposable where TEntity : class
     {
         Task<TEntity> AddAsync(TEntity entity);
 
@@ -26,6 +26,7 @@ namespace DataAccessLayer
         Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
         Task<bool> AnyExistingAsync(Expression<Func<TEntity, bool>> predicate);
+        IQueryable<TEntity> GetQueryable();
 
         Task SaveAsync();
     }
