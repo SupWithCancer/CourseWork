@@ -50,5 +50,15 @@ namespace WebApi.Controllers
         {
             return Ok(await _service.GetUsersInfoAsync());
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<UserInfoDTO>> GetUserInfoByIdAsync(int id)
+        {
+            var user = await _service.GetUserInfoByIdAsync(id);
+
+            if (user == null) return NotFound();
+
+            return user;
+        }
     }
 }

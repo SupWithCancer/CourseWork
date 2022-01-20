@@ -34,19 +34,38 @@ namespace WebApi.Controllers
             return film;
         }
 
-        //// GET: api/filmes/Categories/3
-        //[HttpGet("Categories/{categoryId:int}")]
-        //public async Task<ActionResult<List<FilmDTO>>> GetfilmesByCategoryId(int categoryId)
-        //{
-        //    return await _service.GetfilmesByCategoryIdAsync(categoryId);
-        //}
+        // GET: api/films/avengers
+        [HttpGet("{name}")]
+        public async Task<ActionResult<List<FilmDTO>>> GetFilmsByName(string name)
+        {
+            return await _service.GetFilmsByNameAsync(name);
+        }
 
-        //// GET: api/filmes/Cuisine/3
-        //[HttpGet("Cuisines/{cuisineId:int}")]
-        //public async Task<ActionResult<List<FilmDTO>>> GetfilmesByCuisineId(int cuisineId)
-        //{
-        //    return await _service.GetfilmesByCuisineIdAsync(cuisineId);
-        //}
+        [HttpGet("Description/{description}")]
+        public async Task<ActionResult<List<FilmDTO>>> GetFilmsByDescription(string description)
+        {
+            return await _service.GetFilmsByDescriptionAsync(description);
+        }
+        // GET: api/films/2021
+        [HttpGet("Year/{year}")]
+        public async Task<ActionResult<List<FilmDTO>>> GetFilmsByYear(int year)
+        {
+            return await _service.GetFilmsByYearAsync(year);
+        }
+
+        [HttpGet("Theme/{theme}")]
+        public async Task<ActionResult<List<FilmDTO>>> GetFilmsByTheme(string theme)
+        {
+            return await _service.GetFilmsByThemeAsync(theme);
+        }
+        [HttpGet("Search/")]
+        public async Task<ActionResult<List<FilmDTO>>> GetFilmsByParameter(
+    
+           [FromQuery] string? name, [FromQuery] string? description) =>
+
+            await _service.GetFilmsByParameters(name, description);
+
+
 
         // PUT: api/filmes/5
         [HttpPut("{id:int}")]
