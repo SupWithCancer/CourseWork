@@ -2,8 +2,9 @@
 using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Models;
-using DataAccessLayer;
+using DataAccessLayer.Interfaces;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogicLayer.Services
 {
@@ -32,19 +33,49 @@ namespace BusinessLogicLayer.Services
             return _mapper.Map<List<FilmDTO>>(films);
         }
 
-        //public async Task<List<FilmDTO>> GetFilmsByGenreIdAsync(int categoryId)
-        //{
-        //    var recipes = await _unitOfWork.Recipes.GetWhereAsync(d => d.CategoryId == categoryId);
+        public async Task<List<FilmDTO>> GetFilmsByNameAsync(string name)
+        {
+            var films = await _unitOfWork.Film.GetWhereAsync(d => d.Name.ToLower().Contains(name.ToLower()) || d.Description.ToLower().Contains(name.ToLower()));
 
-        //    return _mapper.Map<List<RecipeDTO>>(recipes);
-        //}
 
-        //public async Task<List<RecipeDTO>> GetRecipesByCuisineIdAsync(int cuisineId)
-        //{
-        //    var recipes = await _unitOfWork.Recipes.GetWhereAsync(d => d.CuisineId == cuisineId);
+            return _mapper.Map<List<FilmDTO>>(films);
+        }
 
-        //    return _mapper.Map<List<RecipeDTO>>(recipes);
-        //}
+        public async Task<List<FilmDTO>> GetFilmsByThemeAsync(string theme)
+        {
+            var films = await _unitOfWork.Film.GetWhereAsync(d => d.Theme.ToLower().Contains(theme.ToLower()));
+
+            return _mapper.Map<List<FilmDTO>>(films);
+        }
+        public async Task<List<FilmDTO>> GetFilmsByDescriptionAsync(string description)
+        {
+            var films = await _unitOfWork.Film.GetWhereAsync(d => d.Description.ToLower().Contains(description.ToLower()));
+
+            return _mapper.Map<List<FilmDTO>>(films);
+        }
+        public async Task<List<FilmDTO>> GetFilmsByParameters(
+        string? name, string? description)
+        {
+            var query = _unitOfWork.Film.GetQueryable();
+
+            if (name != null)
+                query = query.Where(d => d.Name.ToLower().Contains(name.ToLower()));
+
+            
+            if (description!= null)
+                query = query.Where(d => d.Description.ToLower().Contains(description.ToLower()));
+          
+
+            return _mapper.Map<List<FilmDTO>>(await query.ToListAsync());
+        }
+
+        public async Task<List<FilmDTO>> GetFilmsByYearAsync(int year)
+        {
+            var films = await _unitOfWork.Film.GetWhereAsync(d => d.Year.Equals(year));
+
+            return _mapper.Map<List<FilmDTO>>(films);
+        }
+     
 
         public async Task<bool> AnyFilmsAsync(Expression<Func<Film, bool>> expression)
         {
