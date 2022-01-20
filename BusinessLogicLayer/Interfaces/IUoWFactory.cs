@@ -1,4 +1,4 @@
-﻿using DataAccessLayer;
+﻿using DataAccessLayer.Interfaces;
 
 namespace BusinessLogicLayer.Interfaces
 {
