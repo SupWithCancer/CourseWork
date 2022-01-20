@@ -9,7 +9,7 @@ public class FilmLibraryContext : DbContext
 {
     public FilmLibraryContext() : base() {
         //Database.EnsureDeleted();
-        //Database.EnsureCreated();
+        Database.EnsureCreated();
     }
 
     public FilmLibraryContext(DbContextOptions options) : base(options)
@@ -40,7 +40,7 @@ public class FilmLibraryContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=FilmLibrarydb;Username=postgres;Password=123");
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=FilmLibDB;Username=postgres;Password=123");
         base.OnConfiguring(optionsBuilder);
     }
 
@@ -131,6 +131,11 @@ public class FilmLibraryContext : DbContext
 
             entity.Property(e => e.ImagePath)
                  .HasColumnName("image_path")
+                 .IsUnicode(true);
+
+
+            entity.Property(e => e.Description)
+                 .HasColumnName("description")
                  .IsUnicode(true);
 
 
@@ -271,6 +276,13 @@ public class FilmLibraryContext : DbContext
             entity.Property(e => e.Year)
                  .HasColumnName("year")
                  .IsRequired();
+
+            entity.Property(e => e.Rank)
+               .HasColumnName("rank");
+
+            entity.Property(e => e.Theme)
+              .HasColumnName("theme")
+              .IsUnicode(true);
 
             entity.Property(e => e.ImagePath)
                 .HasColumnName("image_path")

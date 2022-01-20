@@ -1,31 +1,31 @@
 ﻿using System.Threading.Tasks;
 using DataAccessLayer.Models;
-
+using DataAccessLayer.Interfaces;
 namespace DataAccessLayer
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly FilmLibraryContext db;
-        public UnitOfWork() => db = new();
+        private readonly FilmLibraryContext _db;
+        public UnitOfWork() => _db = new();
 
-        private IRepository<int, User> usersRepository;
-        private IRepository<int, Film> filmsRepository;
-        private IRepository<int, FilmPerson> filmPersonRepository;
-        private IRepository<int, Mark> marksRepository;
-        private IRepository<int, Genre> genresRepository;
-        private IRepository<int, GenreFilm> genreFilmRepository;
-        private IRepository<int, Person> personRepository;
-        private IRepository<int, Role> roleRepository;
-        private IRepository<int, Comment> commentsRepository;
+        private IRepository<int, User> _userRepository;
+        private IRepository<int, Film> _filmsRepository;
+        private IRepository<int, FilmPerson> _film_personRepository;
+        private IRepository<int, Mark> _marksRepository;
+        private IRepository<int, Genre> _genresRepository;
+        private IRepository<int , GenreFilm> _genreFilmRepository;
+        private IRepository<int, Person> _personRepository;
+        private IRepository<int, Role> _roleRepository;
+        private IRepository<int, Comment> _commentsRepository;
 
 
         public IRepository<int, User> User
         {
             get
             {
-                if (usersRepository == null)
-                    usersRepository = new EFRepository<int, User, FilmLibraryContext>(db);
-                return usersRepository;
+                if (_userRepository == null)
+                    _userRepository = new EFRepository<int, User, FilmLibraryContext>(_db);
+                return _userRepository;
             }
         }
 
@@ -35,18 +35,18 @@ namespace DataAccessLayer
         {
             get
             {
-                if (genreFilmRepository == null)
-                    genreFilmRepository = new EFRepository<int, GenreFilm, FilmLibraryContext>(db);
-                return genreFilmRepository;
+                if (_genreFilmRepository == null)
+                    _genreFilmRepository = new EFRepository<int, GenreFilm, FilmLibraryContext>(_db);
+                return _genreFilmRepository;
             }
         }
         public IRepository<int, Film> Film
         {
             get
             {
-                if (filmsRepository == null)
-                    filmsRepository = new EFRepository<int, Film, FilmLibraryContext>(db);
-                return filmsRepository;
+                if (_filmsRepository == null)
+                    _filmsRepository = new EFRepository<int, Film, FilmLibraryContext>(_db);
+                return _filmsRepository;
             }
         }
 
@@ -54,9 +54,9 @@ namespace DataAccessLayer
         {
             get
             {
-                if (personRepository == null)
-                    personRepository = new EFRepository<int, Person, FilmLibraryContext>(db);
-                return personRepository;
+                if (_personRepository == null)
+                    _personRepository = new EFRepository<int, Person, FilmLibraryContext>(_db);
+                return _personRepository;
             }
         }
 
@@ -64,9 +64,9 @@ namespace DataAccessLayer
         {
             get
             {
-                if (marksRepository == null)
-                    marksRepository = new EFRepository<int, Mark, FilmLibraryContext>(db);
-                return marksRepository;
+                if (_marksRepository == null)
+                    _marksRepository = new EFRepository<int, Mark, FilmLibraryContext>(_db);
+                return _marksRepository;
             }
         }
 
@@ -74,9 +74,9 @@ namespace DataAccessLayer
         {
             get
             {
-                if (genresRepository == null)
-                    genresRepository = new EFRepository<int, Genre, FilmLibraryContext>(db);
-                return genresRepository;
+                if (_genresRepository == null)
+                    _genresRepository = new EFRepository<int, Genre, FilmLibraryContext>(_db);
+                return _genresRepository;
             }
         }
 
@@ -84,9 +84,9 @@ namespace DataAccessLayer
         {
             get
             {
-                if (roleRepository == null)
-                    roleRepository = new EFRepository<int, Role, FilmLibraryContext>(db);
-                return roleRepository;
+                if (_roleRepository == null)
+                    _roleRepository = new EFRepository<int, Role, FilmLibraryContext>(_db);
+                return _roleRepository;
             }
         }
 
@@ -94,34 +94,30 @@ namespace DataAccessLayer
         {
             get
             {
-                if (filmPersonRepository == null)
-                    filmPersonRepository = new EFRepository<int, FilmPerson, FilmLibraryContext>(db);
-                return filmPersonRepository;
+                if (_film_personRepository == null)
+                    _film_personRepository = new EFRepository<int, FilmPerson, FilmLibraryContext>(_db);
+                return _film_personRepository;
             }
         }
         public IRepository<int, Comment> Comment
         {
             get
             {
-                if (commentsRepository == null)
-                    commentsRepository = new EFRepository<int, Comment, FilmLibraryContext>(db);
-                return commentsRepository;
+                if (_commentsRepository == null)
+                    _commentsRepository = new EFRepository<int, Comment, FilmLibraryContext>(_db);
+                return _commentsRepository;
             }
         }
 
-        public async Task SaveAsync() => await db.SaveChangesAsync();
-
-        private bool _disposed = false;
+ 
+        public async Task SaveAsync() => await _db.SaveChangesAsync();
+        private bool _disposed;
 
         public virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
-            {
-                if (disposing)
-                    db.Dispose();
-
-                _disposed = true;
-            }
+            if (_disposed) return;
+            if (disposing) _db.Dispose();
+            _disposed = true;
         }
 
         public void Dispose()

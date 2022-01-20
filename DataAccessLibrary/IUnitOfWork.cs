@@ -1,6 +1,6 @@
 ﻿using DataAccessLayer.Models;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
